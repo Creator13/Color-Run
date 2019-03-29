@@ -1,16 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Receptor : MonoBehaviour, IShootable {
+public class Receptor : MonoBehaviour {
+	[SerializeField] private ReceptorRing[] rings;
+
 	private Renderer rend;
-	
+
+	private void Awake() {
+		foreach (ReceptorRing ring in rings) {
+			ring.AttachReceptor(this);
+		}
+	}
+
 	private void Start() {
-		rend = GetComponent<Renderer>();
+		foreach (ReceptorRing ring in rings) {
+			
+		}
 	}
-
-	public void Hit(Color color) {
-		rend.material.color = color;
-	}
-
 }

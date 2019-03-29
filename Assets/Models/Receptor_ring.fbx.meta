@@ -1,51 +1,20 @@
 fileFormatVersion: 2
-guid: 849756e0a8dd7af449f5df4bc5f89703
+guid: 6924599133d00d2448aa9493f3a86e38
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: Receptor base
-    2100002: Color1
-    2100004: Color2
-    2100006: Color3
-    2100008: Color4
-    2100010: Color5
+    2100000: Color1
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Cylinder
-    2186277476908879412: ImportLogs
+    4300000: Cylinder5
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Color1
     second: {fileID: 2100000, guid: ce5598eb56b9cfc4e894ec12389d0864, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Color2
-    second: {fileID: 2100000, guid: ce5598eb56b9cfc4e894ec12389d0864, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Color3
-    second: {fileID: 2100000, guid: ce5598eb56b9cfc4e894ec12389d0864, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Color4
-    second: {fileID: 2100000, guid: ce5598eb56b9cfc4e894ec12389d0864, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Color5
-    second: {fileID: 2100000, guid: ce5598eb56b9cfc4e894ec12389d0864, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Receptor base
-    second: {fileID: 2100000, guid: 1852e18374e45ed499d69fe3c073f429, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -80,10 +49,10 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
-    importVisibility: 0
-    importBlendShapes: 0
-    importCameras: 0
-    importLights: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1

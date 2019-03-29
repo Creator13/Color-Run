@@ -1,46 +1,50 @@
 fileFormatVersion: 2
-guid: 849756e0a8dd7af449f5df4bc5f89703
+guid: ac379adf417bdff469d95a97b16939e0
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
+    100000: Cylinder1
+    100002: Cylinder2
+    100004: Cylinder3
+    100006: Cylinder4
+    100008: Cylinder5
+    100010: Receptor
+    100012: //RootNode
+    400000: Cylinder1
+    400002: Cylinder2
+    400004: Cylinder3
+    400006: Cylinder4
+    400008: Cylinder5
+    400010: Receptor
+    400012: //RootNode
     2100000: Receptor base
-    2100002: Color1
-    2100004: Color2
-    2100006: Color3
-    2100008: Color4
-    2100010: Color5
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Cylinder
+    2100002: Color5
+    2100004: Color1
+    2100006: Color2
+    2100008: Color3
+    2100010: Color4
+    2300000: Cylinder1
+    2300002: Cylinder2
+    2300004: Cylinder3
+    2300006: Cylinder4
+    2300008: Cylinder5
+    2300010: Receptor
+    2300012: //RootNode
+    3300000: Cylinder1
+    3300002: Cylinder2
+    3300004: Cylinder3
+    3300006: Cylinder4
+    3300008: Cylinder5
+    3300010: Receptor
+    3300012: //RootNode
+    4300000: Receptor
+    4300002: Cylinder1
+    4300004: Cylinder5
+    4300006: Cylinder4
+    4300008: Cylinder3
+    4300010: Cylinder2
     2186277476908879412: ImportLogs
   externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Color1
-    second: {fileID: 2100000, guid: ce5598eb56b9cfc4e894ec12389d0864, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Color2
-    second: {fileID: 2100000, guid: ce5598eb56b9cfc4e894ec12389d0864, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Color3
-    second: {fileID: 2100000, guid: ce5598eb56b9cfc4e894ec12389d0864, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Color4
-    second: {fileID: 2100000, guid: ce5598eb56b9cfc4e894ec12389d0864, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Color5
-    second: {fileID: 2100000, guid: ce5598eb56b9cfc4e894ec12389d0864, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

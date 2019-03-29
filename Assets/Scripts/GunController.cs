@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GunController : MonoBehaviour {
 	[SerializeField] private Camera cam;
@@ -17,7 +14,6 @@ public class GunController : MonoBehaviour {
 	private float timeSinceLastEmpty;
 	
 	private void Start() {
-		
 		container = magazine.GetComponent<GunContainer>();
 		container.SetFillPercentage(0);
 		
@@ -51,7 +47,7 @@ public class GunController : MonoBehaviour {
 				FillContainer(pillar);
 			}
 			// If hit receptor, empty the container
-			else if (hitObject is Receptor recp) {
+			else if (hitObject is ReceptorRing recp) {
 				// Use timeout to register a click only once (instead of firing multiple colors after one another)
 				if (! (timeSinceLastEmpty < _emptyingTimeout)) recp.Hit(EmptyContainer());
 			}
