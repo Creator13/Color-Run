@@ -12,11 +12,11 @@ public class GunController : MonoBehaviour {
 
 	private const float _emptyingTimeout = 2;
 	private float timeSinceLastEmpty;
-	
+
 	private void Start() {
 		container = magazine.GetComponent<GunContainer>();
 		container.SetFillPercentage(0);
-		
+
 		timeSinceLastEmpty = _emptyingTimeout;
 	}
 
@@ -49,7 +49,11 @@ public class GunController : MonoBehaviour {
 			// If hit receptor, empty the container
 			else if (hitObject is ReceptorRing recp) {
 				// Use timeout to register a click only once (instead of firing multiple colors after one another)
-				if (! (timeSinceLastEmpty < _emptyingTimeout)) recp.Hit(EmptyContainer());
+				if (!(timeSinceLastEmpty < _emptyingTimeout)) {
+					if (colorInContainer.HasValue && recp.Hit(colorInContainer.Value)) {
+						EmptyContainer();
+					}
+				}
 			}
 		}
 	}
@@ -58,20 +62,20 @@ public class GunController : MonoBehaviour {
 	private float GetExtractionAmt() {
 		return Time.deltaTime * (extractionRate / 100);
 	}
-	
+
 	// Fills the color container of the gun
 	private void FillContainer(Pillar pillar) {
 		// Fill container if it's not full
 		if (containerFill < 1f) {
 			// Extract from pillar
-			Color c = pillar.Extract(GetExtractionAmt());
-			
+			Color c = pillar.Extract();
+
 			// Add fill to container
 			// WARNING: note that this is unrelated to pillar extraction, both values are changed separately
 			containerFill = Mathf.Clamp(containerFill + GetExtractionAmt(), 0f, 1f);
-			
+
 			Debug.Log("Filling: " + containerFill * 100f + "%"); // TODO remove debugging code
-			
+
 			// If the color is empty (null) or different from the color currently being extracted, empty the container
 			// and load a new color
 			if (colorInContainer != c) {
@@ -84,40 +88,33 @@ public class GunController : MonoBehaviour {
 			if (colorInContainer != null) {
 				// Set container color to pillar color (which was loaded into the variable earlier)
 				Debug.Log("Done"); // TODO remove debugging code
+				pillar.Depleted = true;
 			}
 		}
-		
+
 		UpdateContainer();
 	}
 
 	// Empties the contents of the color container of the gun
-	private Color EmptyContainer() {
-		// Only run if both control vars are in the correct state (container must be filled and a color must be set)
-		// TODO this code could turn flaky, fix use of two control variables
-		if (colorInContainer.HasValue && containerFill >= 1f) {
+	private void EmptyContainer() {
 			// Reset the color of the container to white to represent empty
-
+			colorInContainer = Color.white;
+			
 			// Clear stored color and return
 			Color returnColor = colorInContainer.Value;
 			colorInContainer = null;
 			containerFill = 0;
-			
+
 			UpdateContainer();
 
 			// Set timeout
 			timeSinceLastEmpty = 0;
-			
-			return returnColor;
-		}
-		
-		// Return white as 'empty' color
-		return Color.white;
 	}
 
 	private void UpdateContainer() {
 		container = magazine.GetComponent<GunContainer>();
 		container.SetFillPercentage(containerFill);
-		
+
 		if (colorInContainer != null) {
 			container.SetColor(colorInContainer.Value);
 		}

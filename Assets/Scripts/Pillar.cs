@@ -1,13 +1,33 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Pillar : MonoBehaviour, IShootable {
 	[SerializeField] private Color color; // The color of the pillar (set in inspector)
+	public Color Color { get; private set; }
+
+	[SerializeField]
+	private float destroyTimeout = 5; // How many seconds it takes for the pillar to delete itself after depleting
 
 	private Renderer rend; // Renderer component used to change color
 	private MaterialPropertyBlock matPropBlock;
 
-	private float contents = 1f; // How much color still is in this pillar
-	private bool active = true;  // Determines if the Update loop runs
+	private bool depleted = true; // Determines if the Update loop runs
+	
+	public bool Depleted {
+		private get => depleted;
+		set {
+			if (value) {
+				// If depleted is being set to false, directly remove the color (set to white)
+				SetColor(Color.white);
+				// Start timed-out deletion
+				StartCoroutine(DelayedDelete(destroyTimeout));
+			}
+
+			depleted = value;
+		}
+	}
+
+	private SpawnLocation currentLocation;
 
 	private void Awake() {
 		matPropBlock = new MaterialPropertyBlock();
@@ -18,26 +38,22 @@ public class Pillar : MonoBehaviour, IShootable {
 		SetColor();
 	}
 
-	private void Update() {
-		// Set the color of the pillar to white to show it's color has been depleted
-		if (active && contents <= 0) {
-			SetColor(Color.white);
-			// Deactivate so the above code doesn't keep running, might save some performance
-			active = false;
-		}
-
-		//TODO add recharge in case players stops, moves to different pillar, then comes back (or fix this loophole in a different way)
+	private IEnumerator DelayedDelete(float time) {
+		// Delete gameobject after 'time' seconds
+		yield return new WaitForSeconds(time);
+		
+		// Release the attached spawn location if available
+		currentLocation?.Release();
+		// Destroy the object
+		Destroy(gameObject);
 	}
 
-	public Color Extract(float extractRate) {
-		// Subtract contents only if there are contents
-		if (contents > 0) {
-			// Subtract the amount indicated by the gun that orders for extraction, or the amount until zero reached if this value is smaller
-			contents -= extractRate > contents ? contents : extractRate;
-		}
-
-		// Always return color because of state conflict (TODO maybe solve this conflict?)
-		return color;
+	public void AttachSpawnLocation(SpawnLocation location) {
+		currentLocation = location;
+	}
+	
+	public Color Extract() {
+		return Color;
 	}
 
 	public void SetColor(Color? color = null) {
@@ -45,11 +61,14 @@ public class Pillar : MonoBehaviour, IShootable {
 		if (!rend) rend = GetComponent<Renderer>();
 		if (matPropBlock == null) matPropBlock = new MaterialPropertyBlock();
 
+		// Update color value if it is being changed (parameter was passed)
+		if (color.HasValue) Color = color.Value;
+
 		// Get current material properties from renderer
 		rend.GetPropertyBlock(matPropBlock);
 		// Set color
 		// Use class property if no argument given, otherwise use argument
-		matPropBlock.SetColor("_Color", color ?? this.color);
+		matPropBlock.SetColor("_Color", color ?? Color);
 		// Return changed material properties to renderer
 		rend.SetPropertyBlock(matPropBlock);
 	}
