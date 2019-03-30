@@ -4,26 +4,23 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class CharacterMovement : MonoBehaviour {
+	[SerializeField] private Camera cam;
 
-	[SerializeField]
-	private Camera cam;
-	
 	private Vector3 velocity = Vector3.zero;
 	private Vector3 rotation = Vector3.zero;
 	private float camRotationX = 0f;
 	private float currentCameraRotationX = 0f;
 	private Vector3 jumpForce = Vector3.zero;
 
-	[SerializeField]
-	private float cameraRotationLimit = 85f;
-	
+	[SerializeField] private float cameraRotationLimit = 85f;
+
 	private Rigidbody rb;
 
 	private void Start() {
 		// Obtain rigidbody component
 		rb = GetComponent<Rigidbody>();
 	}
-	
+
 	private void FixedUpdate() {
 		PerformMovement();
 		PerformRotation();
@@ -64,11 +61,11 @@ public class CharacterMovement : MonoBehaviour {
 		// Only perform camera rotation if camera is set to an instance
 		if (cam != null) {
 			currentCameraRotationX -= camRotationX * Time.fixedDeltaTime * 50;
-			
+
 			// Limit rotation
 			currentCameraRotationX = Mathf.Clamp(currentCameraRotationX, -cameraRotationLimit, cameraRotationLimit);
-			
-			cam.transform.localEulerAngles = new Vector3(currentCameraRotationX, 0,0);
+
+			cam.transform.localEulerAngles = new Vector3(currentCameraRotationX, 0, 0);
 		}
 	}
 }

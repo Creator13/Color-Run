@@ -95,10 +95,8 @@ public class ReceptorRing : MonoBehaviour, IShootable {
 			return false;
 		}
 
-		if (color == this.keyColor) {
-		// if (true) {
-			// todo notify receptor
-			// SetColor(color);
+		if (color == keyColor) {
+			receptor.NotifyRingHit();
 			IsHit = true;
 			return true;
 		}

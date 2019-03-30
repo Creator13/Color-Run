@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class GunController : MonoBehaviour {
 	[SerializeField] private Camera cam;
 	[SerializeField] private GameObject magazine;
@@ -10,6 +12,8 @@ public class GunController : MonoBehaviour {
 	private Color? colorInContainer;
 	private GunContainer container;
 
+	private AudioSource audioSource;
+
 	private const float _emptyingTimeout = 2;
 	private float timeSinceLastEmpty;
 
@@ -18,6 +22,8 @@ public class GunController : MonoBehaviour {
 		container.SetFillPercentage(0);
 
 		timeSinceLastEmpty = _emptyingTimeout;
+
+		audioSource = GetComponent<AudioSource>();
 	}
 
 	private void Update() {
@@ -50,7 +56,7 @@ public class GunController : MonoBehaviour {
 			else if (hitObject is ReceptorRing recp) {
 				// Use timeout to register a click only once (instead of firing multiple colors after one another)
 				if (!(timeSinceLastEmpty < _emptyingTimeout)) {
-					if (colorInContainer.HasValue && recp.Hit(colorInContainer.Value)) {
+					if (Math.Abs(containerFill - 1) < .01 && colorInContainer.HasValue && recp.Hit(colorInContainer.Value)) {
 						EmptyContainer();
 					}
 				}
@@ -67,6 +73,8 @@ public class GunController : MonoBehaviour {
 	private void FillContainer(Pillar pillar) {
 		// Fill container if it's not full
 		if (containerFill < 1f) {
+			if (!audioSource.isPlaying) audioSource.Play();
+			
 			// Extract from pillar
 			Color c = pillar.Extract();
 
@@ -85,10 +93,11 @@ public class GunController : MonoBehaviour {
 		}
 		else {
 			// If container is full and color is set
-			if (colorInContainer != null) {
+			if (colorInContainer != null && pillar.Color == colorInContainer) {
 				// Set container color to pillar color (which was loaded into the variable earlier)
 				Debug.Log("Done"); // TODO remove debugging code
 				pillar.Depleted = true;
+				if (audioSource.isPlaying) audioSource.Stop();
 			}
 		}
 
