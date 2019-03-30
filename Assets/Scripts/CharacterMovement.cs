@@ -56,11 +56,11 @@ public class CharacterMovement : MonoBehaviour {
 
 	// Execute player and camera rotation
 	private void PerformRotation() {
-		rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation * Time.fixedDeltaTime * 50));
+		rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation));
 
 		// Only perform camera rotation if camera is set to an instance
 		if (cam != null) {
-			currentCameraRotationX -= camRotationX * Time.fixedDeltaTime * 50;
+			currentCameraRotationX -= camRotationX;
 
 			// Limit rotation
 			currentCameraRotationX = Mathf.Clamp(currentCameraRotationX, -cameraRotationLimit, cameraRotationLimit);

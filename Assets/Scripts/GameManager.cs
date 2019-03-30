@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour {
 			// Disable player movement scripts
 			player.GetComponent<CharacterController>().enabled = value;
 			player.GetComponent<CharacterMovement>().enabled = value;
+			player.GetComponent<GunController>().enabled = value;
 			// Save value
 			canMove = value;
 		}

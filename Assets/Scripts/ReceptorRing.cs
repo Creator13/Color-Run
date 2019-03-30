@@ -3,8 +3,6 @@
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Renderer))]
 public class ReceptorRing : MonoBehaviour, IShootable {
-	private static readonly int ColorId = Shader.PropertyToID("_Color");
-
 	[SerializeField] private float emissionStrength = 1.5f; // HDR strength of emission after activation
 
 	[SerializeField] private Color unsetColor = new Color(0.32f, 0.4f, 0.42f, 1.0f); // Default color
@@ -34,10 +32,6 @@ public class ReceptorRing : MonoBehaviour, IShootable {
 		// Initialize fields
 		matPropBlock = new MaterialPropertyBlock();
 		rend = GetComponent<Renderer>();
-	}
-
-	private void Start() {
-		Reset();
 	}
 
 	public void AttachReceptor(Receptor receptor) {
